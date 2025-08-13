@@ -1,0 +1,18 @@
+{
+    "4850001006466": [
+        {
+            "drink_name": "Արարատ 5 տարեկան (1L)",
+            "bottle_weight": 624,
+            "difference": 0.91,
+            "type": "drink"
+        }
+    ],
+    "485000100646600": [
+        {
+            "drink_name": "Արարատ 5 տարեկան (0.7L)",
+            "bottle_weight": null,
+            "difference": 0.94,
+            "type": "drink"
+        }
+    ]
+}

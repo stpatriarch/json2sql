@@ -1,0 +1,4 @@
+{
+"sensor1": {"temp": 21, "hum": 40}, 
+"sensor2": {"temp": 22, "hum": 38}
+}

@@ -1,0 +1,7 @@
+{
+  "order_id": 123,
+  "items": [
+    {"name": "Cola", "qty": 2},
+    {"name": "Chips", "qty": 1}
+  ]
+}
