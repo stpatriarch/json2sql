@@ -50,8 +50,13 @@ class SqliteData(DB_Mngr):
             print(order_by_this, '--orderbythis')
 
             for id, column in self.json.items():
-                for row in column:
-                    values.append((id, *(row.get(k) for k in row.keys())))
+                if isinstance(column, dict):
+                    values.append((id, *(column.get(k) for k in column.keys())))
+                
+                elif isinstance(column, list):
+                    for row in column:
+                        values.append((id, *(row.get(k) for k in row.keys())))
+            
             print(values, '--Values')
         else:
 
@@ -70,10 +75,10 @@ class SqliteData(DB_Mngr):
         query = f'INSERT INTO {self.table} ({keys}) VALUES ({placeholder})'
 
         print(values)
-        # if values:
+        if values:
 
-        #     for item in values:
-        #         self._connection(query, values=item)
+            for item in values:
+                self._connection(query, values=item)
 
 
 
