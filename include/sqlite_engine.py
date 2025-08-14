@@ -61,8 +61,7 @@ class SqliteData(DB_Mngr):
         else:
 
             order_by_this = list(self.json.keys())
-            for key, value in self.json.items():
-                values.append((key, value))
+            values = [tuple(self.json[k] for k in order_by_this)]
 
         keys = ", ".join(order_by_this)
 
@@ -71,6 +70,7 @@ class SqliteData(DB_Mngr):
         print(keys)
         print(placeholder)
         print(self.j_type)
+        print(order_by_this)
 
         query = f'INSERT INTO {self.table} ({keys}) VALUES ({placeholder})'
 

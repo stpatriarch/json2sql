@@ -19,10 +19,12 @@ class JsonModify:
 
         if self.js_struct in ('flaten_dict', 'list_of_dicts', 'dict_of_dict', 'dict_of_list_of_dicts'):
 
-            if self.js_struct == 'flaten_dict' or 'list_of_dicts':
+            if self.js_struct in ('flaten_dict','list_of_dicts'):
                 return self.json, self.js_struct
-            elif self.js_struct == 'dict_of_dict':
-                return self.flatten_dict(self.json)
+            elif self.js_struct in ('dict_of_dict') and self.is_needed_():
+                return self.flatten_dict(self.json), self.js_struct
+            elif self.js_struct in ('dict_of_dict'):
+                return self.json, self.js_struct
 
 
 
@@ -37,6 +39,14 @@ class JsonModify:
                 item[new_key] = value
         return item
 
+
+
+    def is_needed_(self):
+        
+        for v in self.json.values():
+            if any(isinstance(j, (list, dict)) for j in v.values()):
+                return True
+        return False
 
 
     @property

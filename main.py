@@ -32,6 +32,7 @@ def convert(args):
     j_file = JsonModify(file=args.input)
     j_file._connect
     j_f = j_file.json_normalize()
+    print(j_f)
     # j_file.json
     sql = SqliteData(js_file=j_f, name=args.input, table=args.table)
     # print(type(next(iter(sql.json.keys()))[0]))
