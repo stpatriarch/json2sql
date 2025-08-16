@@ -1,18 +1,11 @@
 #!/usr/bin/env python3
 
 import sqlite3
-import json
 from abc import ABC, abstractmethod
 from include.tools import define_types
 
-class DB_Mngr(ABC):
 
-    @abstractmethod
-    def _connection():
-        pass
-    
-
-class SqliteData(DB_Mngr):
+class SqliteData():
 
     def __init__(self, js_file: dict, name: str, table: str)-> None:
         self.db = name.split('.')[0] # համանուն դբ ֆայլի գեներացիայի համար։ Առանց հավելալյալ սիմվոլների անուն․դբ։
@@ -47,7 +40,6 @@ class SqliteData(DB_Mngr):
             array_ = next(iter(self.json.values()), [])
             file_sample = array_[0] if isinstance(array_, list) else next(iter(self.json.values()))
             order_by_this =  ('id', *file_sample) # list(next(iter(self.json.values()))[0])
-            print(order_by_this, '--orderbythis')
 
             for id, column in self.json.items():
                 if isinstance(column, dict):
@@ -57,7 +49,6 @@ class SqliteData(DB_Mngr):
                     for row in column:
                         values.append((id, *(row.get(k) for k in row.keys())))
             
-            print(values, '--Values')
         else:
 
             order_by_this = list(self.json.keys())
@@ -67,36 +58,12 @@ class SqliteData(DB_Mngr):
 
         placeholder =  ", ".join(['?'] * len(order_by_this))
 
-        print(keys)
-        print(placeholder)
-        print(self.j_type)
-        print(order_by_this)
-
         query = f'INSERT INTO {self.table} ({keys}) VALUES ({placeholder})'
 
-        print(values)
+
         if values:
 
             for item in values:
                 self._connection(query, values=item)
 
 
-
-    
-
-
-
-class JsonData(DB_Mngr):
-    
-    def __init__(self, name: str)-> object:
-        self.name = name
-        self._connection()
-
-    def _connection(self)-> dict:
-
-        with open(f"{self.js}", encoding="utf-8") as file:
-            data = json.load(file)
-
-        return data
-    
-    

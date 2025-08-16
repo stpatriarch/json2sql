@@ -21,8 +21,11 @@ class JsonModify:
 
             if self.js_struct in ('flaten_dict','list_of_dicts'):
                 return self.json, self.js_struct
+            
             elif self.js_struct in ('dict_of_dict') and self.is_needed_():
-                return self.flatten_dict(self.json), self.js_struct
+                self.js_struct = 'dict_of_dict_branched'
+                return self.flatten_dict(self.normize(self.json)), self.js_struct
+            
             elif self.js_struct in ('dict_of_dict'):
                 return self.json, self.js_struct
 
@@ -47,6 +50,18 @@ class JsonModify:
             if any(isinstance(j, (list, dict)) for j in v.values()):
                 return True
         return False
+    
+
+    def normize(self, input):
+
+        for k, v in input.items():
+
+            if isinstance(v, dict):
+                self.normize(v)  
+            elif isinstance(v, list):
+                input[k] = ', '.join(map(str, v))
+
+        return input
 
 
     @property
@@ -83,11 +98,3 @@ class JsonModify:
             data = json.load(file)
         
         return data
-
-
-
-if __name__ == '__main__':
-    js = JsonModify('base_data.json')
-    js._connect
-    json_ = js.flatten_dict(js.json)
-    print(json_)

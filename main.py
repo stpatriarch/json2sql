@@ -33,17 +33,11 @@ def convert(args):
     j_file._connect
     j_f = j_file.json_normalize()
     print(j_f)
-    # j_file.json
     sql = SqliteData(js_file=j_f, name=args.input, table=args.table)
-    # print(type(next(iter(sql.json.keys()))[0]))
-    # # for rows in sql.json.values():
-    # #     for row in rows:
-    # #         keys = ", ".join(key for key in row)
-    # # keys_ = ', '.join({key for rows in sql.json.values() for row in rows for key in row})
-    # # print(keys_)
+
     sql.create()
     sql.insert()
-    # json_to_sqlite(args.input, args.table, args.db)
+
 
 if __name__ == '__main__':
     main() 

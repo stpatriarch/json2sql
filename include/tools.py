@@ -20,15 +20,14 @@ def define_types(data: dict, j_type: str )-> dict:
 
         extracted_types['id'] = types_d.get(type(id_))
 
-       
+      
     else:
 
         file_sample = data
-    
+
     for name, type_ in file_sample.items():
         sql_type = types_d.get(type(type_))
 
         extracted_types[name] = sql_type
-    
-    
+
     return extracted_types
