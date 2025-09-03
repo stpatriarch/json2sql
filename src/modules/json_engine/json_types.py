@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from collections import defaultdict, ChainMap
+from collections import defaultdict
 
 class JsonTypeIdentifer:
     

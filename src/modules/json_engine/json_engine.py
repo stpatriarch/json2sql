@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 
 import json
-from src.mixin_handles import NotSupportedJsonMixin
-from src.modules.json_engine.json_types import DctofDct, DctofLstofDcts, LstofDct
-
-ACCEPTABLE_TYPES = ('list_of_dicts', 
-                    'dict_of_dict', 
-                    'dict_of_list_of_dicts')
+from src.tools import NotSupportedJsonMixin
+from src.modules.json_engine import DctofDct, DctofLstofDcts, LstofDct, ACCEPTABLE_TYPES
 
 
 class JsonModify(NotSupportedJsonMixin):

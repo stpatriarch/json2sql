@@ -1,13 +1,4 @@
 #!/usr/bin/env python3
-def array_type(array_):
-
-    if isinstance(array_, list):
-        return array_[0]
-    elif isinstance(array_, dict):
-        return next(iter(array_.values()))
-    else:
-        return None
-    
 
 def define_types(data: dict, j_type: str )-> dict:
 
