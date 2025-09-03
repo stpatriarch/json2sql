@@ -2,7 +2,7 @@
 
 import sqlite3
 from abc import ABC, abstractmethod
-from include.tools import define_types
+from src.tools import define_types
 
 
 class SqliteData():
@@ -35,11 +35,11 @@ class SqliteData():
     def insert(self)-> None:
 
         values = []
-        if self.j_type in ('dict_of_list_of_dicts', 'dict_of_dict'):
+        if self.j_type in ('dict_of_list_of_dict', 'dict_of_dict'):
 
             array_ = next(iter(self.json.values()), [])
             file_sample = array_[0] if isinstance(array_, list) else next(iter(self.json.values()))
-            order_by_this =  ('id', *file_sample) # list(next(iter(self.json.values()))[0])
+            order_by_this =  ('id', *file_sample)
 
             for id, column in self.json.items():
                 if isinstance(column, dict):
@@ -48,7 +48,12 @@ class SqliteData():
                 elif isinstance(column, list):
                     for row in column:
                         values.append((id, *(row.get(k) for k in row.keys())))
-            
+
+        elif self.j_type in ('list_of_dict'):
+
+            order_by_this = list(self.json[0].keys())
+            values = [tuple(d[k] for k in order_by_this) for d in self.json]
+
         else:
 
             order_by_this = list(self.json.keys())
