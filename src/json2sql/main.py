@@ -3,8 +3,7 @@
 # Գործիքը կոչված է օգնել վերափոխել json֊ը sqlite3 ֆայլի։
 
 import argparse
-from src.modules import SqliteData
-from src.modules import JsonModify
+from json2sql.modules import SqliteData, JsonModify
 
 def convert(args):
 
@@ -19,13 +18,14 @@ def convert(args):
     ofile.insert()
 
 def main():
-    parser = argparse.ArgumentParser(description="ԱՅՍ ԳՈՐԾԻՔԸ ԿՈՉՎԱԾ Է ՕԳՆԵԼ ՎԵՐԱՓՈԽԵԼ(ԿՈՆՎԵՐՏԱՑԻԱ) JSON֊Ը SQLITE3 ՖԱՅԼԻ։")
-    parser.add_argument('--input', '-i', required=True, help='json ֆայլի ճանապարհ')
-    parser.add_argument('--table', '-t', required=True, help='SQL աղյուսակի անուն')
+    parser = argparse.ArgumentParser(description="ԱՅՍ ԳՈՐԾԻՔԸ ԿՈՉՎԱԾ Է ՕԳՆԵԼ ՎԵՐԱՓՈԽԵԼ JSON֊Ը SQL DB ՖԱՅԼԻ։" \
+    "\n THIS TOOL HELPS TO CONVERT JSON FILE TO SQL DB.")
+    parser.add_argument('--input', '-i', required=True, help='json ֆայլի ճանապարհ | json file path')
+    parser.add_argument('--table', '-t', required=True, help='SQL աղյուսակի անուն | SQL column name')
 
     args = parser.parse_args()
     convert(args=args)
 
 
 if __name__ == '__main__':
-    main() 
+    main()

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 import json
-from src.tools import NotSupportedJsonMixin
-from src.modules.json_engine import DctofDct, DctofLstofDcts, LstofDct, ACCEPTABLE_TYPES
+from json2sql.tools import NotSupportedJsonMixin
+from json2sql.modules.json_engine import DctofDct, DctofLstofDcts, LstofDct, ACCEPTABLE_TYPES
 
 
 class JsonModify(NotSupportedJsonMixin):

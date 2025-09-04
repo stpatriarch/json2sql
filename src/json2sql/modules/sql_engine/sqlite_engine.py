@@ -2,7 +2,7 @@
 
 import sqlite3
 from abc import ABC, abstractmethod
-from src.tools import define_types
+from json2sql.tools import define_types
 
 
 class SqliteData():
