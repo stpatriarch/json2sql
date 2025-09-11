@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from .json_types import DctofDct, DctofLstofDcts, LstofDct
 
 ACCEPTABLE_TYPES = ('list_of_dicts', 

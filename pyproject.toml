@@ -6,10 +6,10 @@ build-backend = "setuptools.build_meta"
 name = "json2sql"
 version = "0.0.1.dev0925"
 description = "json ֆայլի փոյխակերպիչ sql ֆայլի"
-authors = [
-    { name = "Stpatrirach" }
-]
-requires-python = ">=3.7"
+readme = "README.md"
+authors = [{ name = "Stpatrirach", email = "chinaryannarek@gmail.com"}]
+license = { file = "LICENSE"}
+requires-python = ">=3.10"
 dependencies = [
     "setuptools>=80.9.0"
 ]
@@ -18,8 +18,8 @@ dependencies = [
 packages = ["json2sql", 
 "json2sql.modules", 
 "json2sql.tools", 
-"json2sql.modules.json_engine", 
-"json2sql.modules.sql_engine"] 
+"json2sql.modules.json", 
+"json2sql.modules.sql"] 
 package-dir = {"" = "src"}
 
 [project.scripts]

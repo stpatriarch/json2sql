@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-
+from typing import Any
 import json
 from json2sql.tools import NotSupportedJsonMixin
-from json2sql.modules.json_engine import DctofDct, DctofLstofDcts, LstofDct, ACCEPTABLE_TYPES
+from json2sql.modules.json import DctofDct, DctofLstofDcts, LstofDct, ACCEPTABLE_TYPES
 
 
 class JsonModify(NotSupportedJsonMixin):
@@ -18,7 +18,7 @@ class JsonModify(NotSupportedJsonMixin):
     
 
 
-    def json_normalize(self):
+    def json_normalize(self) -> tuple:
 
         if self.js_struct in ACCEPTABLE_TYPES:
 
@@ -52,7 +52,7 @@ class JsonModify(NotSupportedJsonMixin):
 
 
     @property
-    def define_json_struct(self)-> str:
+    def define_json_struct(self) -> str:
 
         if isinstance(self.json, dict):
 
@@ -76,7 +76,7 @@ class JsonModify(NotSupportedJsonMixin):
     
 
     @property
-    def _connect(self):
+    def _connect(self) -> dict:
         with open(f"{self.file}", encoding='utf-8') as file:
             data = json.load(file)
         

@@ -15,7 +15,7 @@ cd json2sql
 
 # վիրտուալ աշխատավայրի ստեղծում և ակտիվացում
 python3 -m venv venv
-source venv/bit/activate
+source venv/bin/activate
 
 # գործիքի տեղադրում
 pip install .
@@ -35,4 +35,3 @@ SQL | STATUS | DATE
 **SqLite** | $${\color{green}Ավարտված}$$ | 03.09.25
 **PosgreSql** | $${\color{red}Պլանավորված}$$ | -
 **MySql** | $${\color{red}Պլանավորված}$$ | -
-

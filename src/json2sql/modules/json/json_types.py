@@ -4,15 +4,15 @@ from collections import defaultdict
 
 class JsonTypeIdentifer:
     
-    def __init__(self, json):
+    def __init__(self, json) -> None:
         self.json = json
         self.combined_data = defaultdict(list)
 
 
-    def initialization(self):
+    def initialization(self) -> None:
         raise NotImplementedError
 
-    def json_standardize(self, dct, parent_key='', sep='_'):
+    def json_standardize(self, dct: dict, parent_key: str='', sep: str='_') -> dict:
 
         item = {}
         
@@ -26,7 +26,7 @@ class JsonTypeIdentifer:
 
         return item
     
-    def calibrate(self, input):
+    def calibrate(self, input: dict) -> dict:
 
         for k, v in input.items():
 
@@ -42,7 +42,7 @@ class DctofDct(JsonTypeIdentifer):
 
 
     @property  
-    def initialization(self):
+    def initialization(self) -> tuple:
 
         if self.is_branched:
             return self.json_standardize(self.calibrate(self.json)), 'dict_of_dict_branched'
@@ -61,7 +61,7 @@ class DctofDct(JsonTypeIdentifer):
 class DctofLstofDcts(JsonTypeIdentifer):
     
     
-    def json_standardize(self, dct, parent_key='', sep='_'):
+    def json_standardize(self, dct: dict, parent_key: str='', sep: str='_') -> dict:
 
         item = {}
 
@@ -79,7 +79,7 @@ class DctofLstofDcts(JsonTypeIdentifer):
         return self.calibrate(item)
 
     @property
-    def initialization(self):
+    def initialization(self) -> tuple:
         
         value_type = next(iter(self.json.values()))
         
@@ -91,6 +91,6 @@ class DctofLstofDcts(JsonTypeIdentifer):
 class LstofDct(JsonTypeIdentifer):
 
     @property
-    def initialization(self):
+    def initialization(self) -> tuple:
 
         return self.json, 'list_of_dict'

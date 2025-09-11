@@ -5,16 +5,16 @@ from abc import ABC, abstractmethod
 from json2sql.tools import define_types
 
 
-class SqliteData():
+class SqliteData:
 
-    def __init__(self, js_file: dict, name: str, table: str)-> None:
+    def __init__(self, js_file: dict, name: str, table: str) -> None:
         self.db = name.split('.')[0] # համանուն դբ ֆայլի գեներացիայի համար։ Առանց հավելալյալ սիմվոլների անուն․դբ։
         self.json = js_file[0]
         self.j_type = js_file[1]
         self.table = table
         self.connection = sqlite3.connect(f"{self.db}.db")     
 
-    def _connection(self, content: str, values=False)-> sqlite3.Cursor:
+    def _connection(self, content: str, values=False) -> sqlite3.Cursor:
 
         with self.connection:
             self.connection.row_factory = sqlite3.Row
@@ -22,7 +22,7 @@ class SqliteData():
             cursor.execute(content, values or [])
             return cursor
 
-    def create(self)-> None:
+    def create(self) -> None:
 
             columns = ', '.join(f"{name_} {type_}" for name_, type_ in define_types(data=self.json, j_type=self.j_type).items())
             table = f"""
@@ -32,7 +32,7 @@ class SqliteData():
             return self._connection(table)
 
 
-    def insert(self)-> None:
+    def insert(self) -> None:
 
         values = []
         if self.j_type in ('dict_of_list_of_dict', 'dict_of_dict'):
