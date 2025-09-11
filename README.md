@@ -52,12 +52,6 @@ SQL | STATUS | DATE | MARK |
 
 ## 🇷🇺
 
-# json2sql
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-<br>  
-
 ### :toolbox: Конвертер JSON-файлов в SQL \*.db одним действием.
 
 Этот простой инструмент предназначен для того, чтобы выполнить преобразование (**convert**) **JSON**-файла в **SQL**-файл. Он принимает **\*.json** и преобразует его в **\*.db**.
@@ -105,12 +99,6 @@ SQL | STATUS | DATE | MARK |
 ---
 
 ## 🇬🇧
-
-# json2sql
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-<br>  
 
 ### :toolbox: Convert JSON files into SQL \*.db with a single command.
 
