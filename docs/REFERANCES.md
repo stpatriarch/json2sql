@@ -32,29 +32,9 @@ id | drink_name | bottle_weight | difference | type
 ###### input.json
 
 ```json
-{
-    "name": "Alice", 
-    "age": 30, 
-    "is_admin": false
-    }
-```
-
-###### output.db
-
-name | age | is_admin
---- | --- | ---
-Alice | 30 | 624
-
----
-
-###### input.json
-
-```json
 [
-    {"id": 1, 
-    "name": "Coffee"},
-    {"id": 2, 
-    "name": "Tea"}
+    {"id": 1, "name": "Coffee"},
+    {"id": 2, "name": "Tea"}
 ] 
 ```
 
@@ -88,44 +68,64 @@ sensor2 | 22 | 38
 ###### input.json
 
 ```json
-{
-
-"user": {
-    "id": 1, 
-    "name": "Narek", 
-    "roles": ["admin", "editor"], 
-    "settings": {
-        "theme": "dark", 
-        "notifications": true}}
-
-}
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john@example.com",
+    "age": 30,
+    "active": true
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "age": 25,
+    "active": false
+  },
+  {
+    "id": 3,
+    "name": "Bob Johnson",
+    "email": "bob@example.com",
+    "age": 35,
+    "active": true
+  }
+]
 ```
 
 ###### output.db
 
-user_id | user_name | user_roles | user_settings_theme | user_settings_notifications
+id | name | email | age | active
 --- | --- | --- | --- | ---
-1 | patrick | admin, editor | dark | true
+1 | John Doe | john@example.com | 30 | true
+2 | Jane Smith | jane@example.com | 25 | false
+3 | Bob Johnson | bob@example.com | 35 | true
 
 ---
 
-###### input.json
+###### input.json (in progress now...)
 
 ```json
-{
+[{
   "order_id": 123,
   "items": [
     {"name": "Cola", "qty": 2},
     {"name": "Chips", "qty": 1}
-  ]
-}
+  ]},
+  {"order_id": 456,
+  "items": [
+    {"name": "Pekro", "qty": 2},
+    {"name": "Tuna", "qty": 1}
+  ]}
+]
+
 ```
 
 ###### output.db
 
-order_id | name | qty
+order_id | items_name | items_qty
 --- | --- | ---
-123 | cola | 2
-123 | chips | 1
+123 | Cola, Chips | 2, 1
+456 | Pekro, Tuna | 2, 1
 
 ---
