@@ -118,13 +118,8 @@ class LstofDct(JsonTypeIdentifer):
 
 
     @property
-<<<<<<< Updated upstream:src/json2sql/modules/json_engine/json_types.py
-    def initialization(self):
-=======
     def initialization(self) -> tuple:
         if self.is_branched:
             return self.json_standardize(self.json), 'list_of_dict_branched'
-
->>>>>>> Stashed changes:src/json2sql/modules/json/json_types.py
 
         return self.json, 'list_of_dict'

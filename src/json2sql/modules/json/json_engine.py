@@ -2,7 +2,7 @@
 
 import json
 from json2sql.tools import NotSupportedJsonMixin
-from json2sql.modules.json_engine import DctofDct, DctofLstofDcts, LstofDct, ACCEPTABLE_TYPES
+from json2sql.modules.json import DctofDct, DctofLstofDcts, LstofDct, ACCEPTABLE_TYPES
 
 
 class JsonModify(NotSupportedJsonMixin):
