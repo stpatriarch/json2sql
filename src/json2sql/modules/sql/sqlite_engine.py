@@ -53,7 +53,9 @@ class SqliteData():
             print(self.j_type)
             if self.j_type in ('list_of_dict_branched',):
                 order_by_this = list(self.json.keys())
-                values = [tuple(self.json[k] for k in order_by_this)]
+
+                v = [tuple(self.json[k] for k in order_by_this)]
+                # values = [tuple(self.json[k] for k in order_by_this)]
             else:
                 order_by_this = list(self.json[0].keys())
                 values = [tuple(d[k] for k in order_by_this) for d in self.json]

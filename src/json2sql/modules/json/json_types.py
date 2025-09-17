@@ -101,20 +101,21 @@ class LstofDct(JsonTypeIdentifer):
     def json_standardize(self, dct, parent_key = '', sep = '_'):
 
         item = {}
-        
-        for i in dct:
-            for key, value in i.items():
-                new_key = f'{parent_key}{sep}{key}' if parent_key else key
+        if isinstance(dct, list):
+
+            for i in dct:
+                for key, value in i.items():
+                    new_key = f'{parent_key}{sep}{key}' if parent_key else key
             
-                if isinstance(value, list):
-                    item.update(self.json_standardize(value, new_key, sep=sep))
+                    if isinstance(value, list):
+                        item.update(self.json_standardize(value, new_key, sep=sep))
                 
-                elif isinstance(value, dict):
-                    item.update(super().json_standardize(value, new_key, sep=sep))
-                else:
-                    self.combined_data[new_key].append(value,)
+                    elif isinstance(value, dict):
+                        item.update(super().json_standardize(value, new_key, sep=sep))
+                    else:
+                        self.combined_data[new_key].append(value,)
         print(item)
-        return {k: tuple(v) for k, v in self.combined_data.items()}
+        return self.combined_data
 
 
     @property

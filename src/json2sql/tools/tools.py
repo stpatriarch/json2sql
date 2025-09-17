@@ -21,8 +21,9 @@ def define_types(data: dict, j_type: str )-> dict:
         file_sample = next(iter(data))
         print('file_sample', file_sample)
     
-    elif j_type in ('list_of_dict_branched'):
+    elif j_type in ('list_of_dict_branched',):
         file_sample = {k: v[0] for k, v in data.items()}
+        
 
     else:
 
