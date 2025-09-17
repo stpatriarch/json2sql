@@ -50,8 +50,8 @@ class SqliteData():
                         values.append((id, *(row.get(k) for k in row.keys())))
 
         elif self.j_type in ('list_of_dict','list_of_dict_branched'):
-            
-            if self.j_type in ('list_of_dict_branched'):
+            print(self.j_type)
+            if self.j_type in ('list_of_dict_branched',):
                 order_by_this = list(self.json.keys())
                 values = [tuple(self.json[k] for k in order_by_this)]
             else:
@@ -61,6 +61,7 @@ class SqliteData():
                 
             print(order_by_this, 'order_by_this')
             print('self.json', self.json)
+            print(self.j_type)
             
             print('values', values)
         

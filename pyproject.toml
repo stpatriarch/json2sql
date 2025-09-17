@@ -18,8 +18,8 @@ dependencies = [
 packages = ["json2sql", 
 "json2sql.modules", 
 "json2sql.tools", 
-"json2sql.modules.json_engine", 
-"json2sql.modules.sql_engine"] 
+"json2sql.modules.json", 
+"json2sql.modules.sql"] 
 package-dir = {"" = "src"}
 
 [project.scripts]
