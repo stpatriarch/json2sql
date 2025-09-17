@@ -19,6 +19,10 @@ def define_types(data: dict, j_type: str )-> dict:
     elif j_type in ('list_of_dict'):
 
         file_sample = next(iter(data))
+        print('file_sample', file_sample)
+    
+    elif j_type in ('list_of_dict_branched'):
+        file_sample = {k: v[0] for k, v in data.items()}
 
     else:
 
@@ -28,6 +32,7 @@ def define_types(data: dict, j_type: str )-> dict:
         sql_type = types_d.get(type(type_))
 
         extracted_types[name] = sql_type
-        
+
+    print('extracted_types', extracted_types)    
     return extracted_types
 

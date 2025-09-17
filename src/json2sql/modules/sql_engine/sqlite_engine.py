@@ -28,7 +28,7 @@ class SqliteData():
             table = f"""
             CREATE TABLE IF NOT EXISTS {self.table} ({columns})
                """
-           
+            print('columns', columns)
             return self._connection(table)
 
 
@@ -49,14 +49,26 @@ class SqliteData():
                     for row in column:
                         values.append((id, *(row.get(k) for k in row.keys())))
 
-        elif self.j_type in ('list_of_dict'):
+        elif self.j_type in ('list_of_dict','list_of_dict_branched'):
+            
+            if self.j_type in ('list_of_dict_branched'):
+                order_by_this = list(self.json.keys())
+                values = [tuple(self.json[k] for k in order_by_this)]
+            else:
+                order_by_this = list(self.json[0].keys())
+                values = [tuple(d[k] for k in order_by_this) for d in self.json]
 
-            order_by_this = list(self.json[0].keys())
-            values = [tuple(d[k] for k in order_by_this) for d in self.json]
+                
+            print(order_by_this, 'order_by_this')
+            print('self.json', self.json)
+            
+            print('values', values)
+        
 
         else:
 
             order_by_this = list(self.json.keys())
+            print(order_by_this)
             values = [tuple(self.json[k] for k in order_by_this)]
 
         keys = ", ".join(order_by_this)
@@ -67,6 +79,9 @@ class SqliteData():
 
 
         if values:
+            print(values)
+            print(self.j_type)
+
 
             for item in values:
                 self._connection(query, values=item)

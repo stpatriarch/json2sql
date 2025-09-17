@@ -37,7 +37,21 @@ class JsonTypeIdentifer:
 
         return input
 
+    @property
+    def is_branched(self) -> bool:
+        if isinstance(self.json, dict):
 
+            for v in self.json.values():
+                if any(isinstance(j, (list, dict)) for j in v.values()):
+                    return True
+            return False
+
+        if isinstance(self.json, list):
+            for item in self.json:
+                if any(isinstance(v, (list, dict)) for v in item.values()):
+                        return True
+                return False
+                
 class DctofDct(JsonTypeIdentifer):
 
 
@@ -49,13 +63,7 @@ class DctofDct(JsonTypeIdentifer):
         
         return self.json, 'dict_of_dict'
     
-    @property
-    def is_branched(self) -> bool:
 
-        for v in self.json.values():
-            if any(isinstance(j, (list, dict)) for j in v.values()):
-                return True
-        return False
         
 
 class DctofLstofDcts(JsonTypeIdentifer):
@@ -90,7 +98,33 @@ class DctofLstofDcts(JsonTypeIdentifer):
 
 class LstofDct(JsonTypeIdentifer):
 
+    def json_standardize(self, dct, parent_key = '', sep = '_'):
+
+        item = {}
+        
+        for i in dct:
+            for key, value in i.items():
+                new_key = f'{parent_key}{sep}{key}' if parent_key else key
+            
+                if isinstance(value, list):
+                    item.update(self.json_standardize(value, new_key, sep=sep))
+                
+                elif isinstance(value, dict):
+                    item.update(super().json_standardize(value, new_key, sep=sep))
+                else:
+                    self.combined_data[new_key].append(value,)
+        print(item)
+        return {k: tuple(v) for k, v in self.combined_data.items()}
+
+
     @property
+<<<<<<< Updated upstream:src/json2sql/modules/json_engine/json_types.py
     def initialization(self):
+=======
+    def initialization(self) -> tuple:
+        if self.is_branched:
+            return self.json_standardize(self.json), 'list_of_dict_branched'
+
+>>>>>>> Stashed changes:src/json2sql/modules/json/json_types.py
 
         return self.json, 'list_of_dict'
