@@ -1,18 +1,22 @@
 #!/usr/bin/env python3
 
 import sqlite3
-from abc import ABC, abstractmethod
-from json2sql.tools import define_types
+from json2sql.modules import SqlEngineAcceptType
 
 
-class SqliteData:
+
+
+class SqliteEngine:
+
+    engine = SqlEngineAcceptType('sqlite')
 
     def __init__(self, js_file: dict, name: str, table: str) -> None:
         self.db = name.split('.')[0] # համանուն դբ ֆայլի գեներացիայի համար։ Առանց հավելալյալ սիմվոլների անուն․դբ։
         self.json = js_file[0]
         self.j_type = js_file[1]
         self.table = table
-        self.connection = sqlite3.connect(f"{self.db}.db")     
+        self.connection = sqlite3.connect(f"{self.db}.db")
+        self.values: str = []
 
     def _connection(self, content: str, values=False) -> sqlite3.Cursor:
 
@@ -24,7 +28,7 @@ class SqliteData:
 
     def create(self) -> None:
 
-            columns = ', '.join(f"{name_} {type_}" for name_, type_ in define_types(data=self.json, j_type=self.j_type).items())
+            columns = ', '.join(f"{name_} {type_}" for name_, type_ in self.engine.define_types(json=self.json, ident=self.j_type).items())
             table = f"""
             CREATE TABLE IF NOT EXISTS {self.table} ({columns})
                """
@@ -34,30 +38,9 @@ class SqliteData:
 
     def insert(self) -> None:
 
-        values = []
-        if self.j_type in ('dict_of_list_of_dict', 'dict_of_dict'):
+        self.create()
 
-            array_ = next(iter(self.json.values()), [])
-            file_sample = array_[0] if isinstance(array_, list) else next(iter(self.json.values()))
-            order_by_this =  ('id', *file_sample)
-
-            for id, column in self.json.items():
-                if isinstance(column, dict):
-                    values.append((id, *(column.get(k) for k in column.keys())))
-                
-                elif isinstance(column, list):
-                    for row in column:
-                        values.append((id, *(row.get(k) for k in row.keys())))
-
-        elif self.j_type in ('list_of_dict'):
-
-            order_by_this = list(self.json[0].keys())
-            values = [tuple(d[k] for k in order_by_this) for d in self.json]
-
-        else:
-
-            order_by_this = list(self.json.keys())
-            values = [tuple(self.json[k] for k in order_by_this)]
+        order_by_this: list[str] = self.prepare_json_group
 
         keys = ", ".join(order_by_this)
 
@@ -66,9 +49,36 @@ class SqliteData:
         query = f'INSERT INTO {self.table} ({keys}) VALUES ({placeholder})'
 
 
-        if values:
+        if self.values:
 
-            for item in values:
-                self._connection(query, values=item)
+            for value in self.values:
+                self._connection(query, values=value)
 
+    @property
+    def prepare_json_group(self) -> list:
 
+        if self.j_type in ('dict_of_list_of_dict', 'dict_of_dict'):
+
+            array_ = next(iter(self.json.values()), [])
+            file_sample = array_[0] if isinstance(array_, list) else next(iter(self.json.values()))
+            order_by_this =  ('id', *file_sample)
+
+            for id, column in self.json.items():
+                if isinstance(column, dict):
+                    self.values.append((id, *(column.get(k) for k in column.keys())))
+                
+                elif isinstance(column, list):
+                    for row in column:
+                        self.values.append((id, *(row.get(k) for k in row.keys())))
+
+        elif self.j_type in ('list_of_dict',):
+
+            order_by_this = list(self.json[0].keys())
+            self.values = [tuple(d[k] for k in order_by_this) for d in self.json]
+
+        else:
+
+            order_by_this = list(self.json.keys())
+            self.values = [tuple(self.json[k] for k in order_by_this)]
+
+        return order_by_this

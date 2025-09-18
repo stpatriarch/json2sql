@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 from typing import Any
 import json
-from json2sql.tools import NotSupportedJsonMixin
+from json2sql.tools import NotSupportedMixin
 from json2sql.modules.json import DctofDct, DctofLstofDcts, LstofDct, ACCEPTABLE_TYPES
 
 
-class JsonModify(NotSupportedJsonMixin):
+class JsonModify(NotSupportedMixin):
 
     def __init__(self, file):
         

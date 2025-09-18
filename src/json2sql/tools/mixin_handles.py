@@ -3,7 +3,10 @@
 class FileError(Exception):
     pass
 
-class NotSupportedJsonMixin:
+class EngineError(Exception):
+    pass
+
+class NotSupportedMixin:
     def unsupported_type(self, type) -> None:
         
         if not isinstance(type, str):
@@ -13,3 +16,6 @@ class NotSupportedJsonMixin:
 
     def empty_json_handle(self) -> None:
         raise FileError('Json file is empty')
+    
+    def unsupported_engine(self, engine):
+        raise EngineError(f'Unsupported engine -> {engine}')
