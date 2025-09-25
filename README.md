@@ -6,7 +6,7 @@
 
 ### :toolbox: json ֆայլերի փոխակերպիչ sql *.db ֆայլի մեկ հրամանով։
 
-Այս պարզագույն գործիքը կոչված է օգնել կատարելու վերափոխում ( **convert** ) **json** ֆայլը **sql** ֆայլի։ Այն ընդունում է **\*.json** և վերափոխում այն **\*.db-ի։**
+Այս պարզագույն գործիքը կոչված է օգնել կատարելու վերափոխում ( **convert** ) **json** ֆայլը **sql** ֆայլի(միայն sqlite շարժիչի պարագայում: Մնացած դեպքերում postgres, mysql այն լռելայն տվյալները կգրանցի տվյլաների բազզայի տրված անվամբ աղյուակում)։ Այն ընդունում է **\*.json** և վերափոխում այն **\*.sql-ի։**
 
 **Տեղադրման և շահագործման գործընթացը** [ասյտեղ](docs/INSTALL_AM.md)
 
@@ -45,8 +45,8 @@
 SQL | STATUS | DATE | MARK |
 ---- | ---- | ---- | ---- |
 **SqLite** | Ավարտված | 03.09.25 |  :white_check_mark: |
-**PosgreSql** | Պլանավորված | - | :large_blue_diamond: |
-**MySql** | Պլանավորված | - | :large_blue_diamond: |
+**PosgreSql** | Պլանավորված | 25.09.25 | :white_check_mark: |
+**MySql** | Պլանավորված | 25.09.25 | :white_check_mark: |
 
 ---
 
@@ -54,7 +54,7 @@ SQL | STATUS | DATE | MARK |
 
 ### :toolbox: Конвертер JSON-файлов в SQL \*.db одним действием.
 
-Этот простой инструмент предназначен для того, чтобы выполнить преобразование (**convert**) **JSON**-файла в **SQL**-файл. Он принимает **\*.json** и преобразует его в **\*.db**.
+Этот простой инструмент предназначен для того, чтобы выполнить преобразование (**convert**) **JSON**-файла в **SQL**-файл (только в случае с движком SQLite. В других случаях Postgres и MySQL будут записывать данные по умолчанию в таблицу базы данных с заданным именем). Он принимает **\*.json** и преобразует его в **\*.sql**.
 
 **Процесс установки и использования** [здесь](docs/INSTALL_RU.md).
 
@@ -92,9 +92,9 @@ SQL | STATUS | DATE | MARK |
 
  SQL | СТАТУС | ДАТА | МЕТКА |
  ---- | ---- | -------- | ---- |
- **SqLite**     | Завершено   | 03.09.25 | :white_check_mark:   |
- **PostgreSql** | Планируется | –        | :large_blue_diamond: |
- **MySql**      | Планируется | –        | :large_blue_diamond: |
+ **SqLite**     | Завершено   | 03.09.25 | :white_check_mark: |
+ **PostgreSql** | Планируется | 25.09.25 | :white_check_mark: |
+ **MySql**      | Планируется | 25.09.25 | :white_check_mark: |
 
 ---
 
@@ -102,7 +102,7 @@ SQL | STATUS | DATE | MARK |
 
 ### :toolbox: Convert JSON files into SQL \*.db with a single command.
 
-This simple tool is designed to perform a transformation (**convert**) from a **JSON** file into an **SQL** file. It takes **\*.json** and converts it into **\*.db**.
+This simple tool is designed to perform a transformation (**convert**) from a **JSON** file into an **SQL**  file (only in the case of sqlite engine. In other cases postgres, mysql it will record the default data in the database table with the given name). It takes **\*.json** and converts it into **\*.sql**.
 
 **Installation and usage guide** [here](docs/INSTALL_EN.md).
 
@@ -128,7 +128,7 @@ After installation, the tool requires two mandatory parameters to run successful
 
 * `-i or --input` — path to the input JSON file.
 * `-t or --table` — name of the table to be created.
-*  `json2sql -i input_file.json -t sql_table_name` - Example full command.
+* `json2sql -i input_file.json -t sql_table_name` - Example full command.
 
 **See acceptable json → sql.db examples [here](docs/REFERANCES.md).**
 
@@ -140,9 +140,8 @@ The project is still under development. The following table shows currently supp
 
  SQL | STATUS | DATE | MARK |
  -------------- | ---- | ---- | ---- |
- **SqLite**     | Completed | 03.09.25 | :white_check_mark:   |
- **PostgreSql** | Planned   | –        | :large_blue_diamond: |
- **MySql**      | Planned   | –        | :large_blue_diamond: |
+ **SqLite**     | Completed | 03.09.25 | :white_check_mark: |
+ **PostgreSql** | Planned   | 25.09.25 | :white_check_mark: |
+ **MySql**      | Planned   | 25.09.25 | :white_check_mark: |
 
 ---
-

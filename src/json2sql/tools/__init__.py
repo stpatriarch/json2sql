@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from .tools import define_types
 from .mixin_handles import NotSupportedMixin
+from .parsers import parser
 
-__all__ = ['define_types', 'NotSupportedMixin']
+__all__ = ['NotSupportedMixin', 'parser',]

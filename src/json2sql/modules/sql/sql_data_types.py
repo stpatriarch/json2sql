@@ -48,6 +48,3 @@ class SqlEngineAcceptType(NotSupportedMixin):
             extracted_types[name] = sql_type
         
         return extracted_types
-
-if __name__ == '__main__':
-    pass

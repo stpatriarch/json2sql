@@ -27,3 +27,8 @@ SQL_TYPES = {
         type(None): 'NULL',
     }
 }
+
+PLACEHOLDERS = {
+    'sqlite': '?',
+    ('postgresql', 'mysql'): '%s',
+}
