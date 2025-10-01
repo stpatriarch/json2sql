@@ -13,9 +13,6 @@ class NotSupportedMixin:
             raise FileError(f'Unsupported data type -> {type.__class__}')
         raise FileError(f'Unsupported file type -> {type}')
     
-
-    def empty_json_handle(self) -> None:
-        raise FileError('Json file is empty')
     
     def unsupported_engine(self, engine):
         raise EngineError(f'Unsupported engine -> {engine}')

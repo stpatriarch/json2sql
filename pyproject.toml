@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "json2sql"
-version = "0.1a1.0.post20250928"
+version = "0.1a1.post20250928"
 description = "json ֆայլի փոյխակերպիչ sql ֆայլի"
 readme = "README.md"
 authors = [{ name = "Stpatrirach", email = "chinaryannarek@gmail.com"}]
