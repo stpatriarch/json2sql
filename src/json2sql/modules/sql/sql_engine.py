@@ -98,7 +98,7 @@ class SqliteEngine(SqlEngine):
         self.json = js_file[0]
         self.j_type = js_file[1]
         self.table = table
-        self.connect = sqlite3.connect(f"{self.db}.sql")
+        self.connect = sqlite3.connect(f"{self.db}.db")
 
         self._engine: str = 'sqlite'
         self.values: str = []

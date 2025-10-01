@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from typing import Any
+import sys
 import json
 from json2sql.tools import NotSupportedMixin
 from json2sql.modules.json import DctofDct, DctofLstofDcts, LstofDct, ACCEPTABLE_TYPES
@@ -77,7 +77,15 @@ class JsonModify(NotSupportedMixin):
 
     @property
     def _connect(self) -> dict:
-        with open(f"{self.file}", encoding='utf-8') as file:
-            data = json.load(file)
+        try:
+
+            with open(f"{self.file}", encoding='utf-8') as file:
+                data = json.load(file)
+            
+            return data
         
-        return data
+        except json.JSONDecodeError as er:
+
+            print(f' \n Json is not valid or empty... \U0000274E \n')
+            print(f'\U00002757 Raised Error -> {er} \U00002757')
+            sys.exit(1)
