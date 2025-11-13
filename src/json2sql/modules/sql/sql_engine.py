@@ -18,7 +18,7 @@ class SqlEngine(ABC):
     """
 
     @abstractmethod
-    def connection(self):
+    def connection(self) -> None:
         pass
 
     def create(self) -> None:
