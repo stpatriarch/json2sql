@@ -1,6 +1,6 @@
 #!/usr/bit/evn python3
 
-from json2sql.modules.sql import SQL_TYPES as sql_types
+from .sql_type_mapping import SQL_TYPES as sql_types
 from json2sql.tools import NotSupportedMixin
 
 class SqlEngineAcceptType(NotSupportedMixin):
@@ -14,16 +14,33 @@ class SqlEngineAcceptType(NotSupportedMixin):
     myslq: MySql engine
     ---
     """
+
     acceptable_engines: tuple[str, str, str] = ('sqlite', 'postgresql', 'mysql')
 
 
     def __init__(self, engine: str) -> None:
+        """
+        Initialize the engine type to determine compatible field types.
+
+        :param engine: Supported engine name.
+        :type engine: str
+        """
         
         self.engine: str = engine if engine in self.acceptable_engines else self.unsupported_engine(engine=engine)
 
 
 
     def define_types(self, json: dict, ident: str) -> dict:
+        """
+        Determine SQL-compatible types for each field based on 
+        the internal conditional JSON structure.
+
+        :param json: JSON data to analyze.
+        :type json: dict
+        :param ident: Internal conditional JSON type indentifier.
+        :type json: str
+        :return: Dictionary mapping field to SQL types.
+        """
 
         extracted_types = {}
 

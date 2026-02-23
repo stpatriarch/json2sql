@@ -1,91 +1,116 @@
 #!/usr/bin/env python3
-import sys
+
 import json
+from pathlib import Path
+
 from json2sql.tools import NotSupportedMixin
-from json2sql.modules.json import DctofDct, DctofLstofDcts, LstofDct, ACCEPTABLE_TYPES
+from .json_types import DictofDict, DictofListofDict, ListofDict
 
 
-class JsonModify(NotSupportedMixin):
-
-    def __init__(self, file):
-        
-        self.file = file
-        self.json = self._connect
-        
-        self.js_struct = self.define_json_struct
-
-     
-    
+ACCEPTABLE_TYPES = ('list_of_dict', 
+                    'dict_of_dict', 
+                    'dict_of_list_of_dict')
 
 
-    def json_normalize(self) -> tuple:
+class JsonModCore(NotSupportedMixin):
+    """
+    Class manages all operations related to the JSON file. 
+    """
 
-        if self.js_struct in ACCEPTABLE_TYPES:
+    def __init__(self, path: str) -> None:
+        """
+        Initialize a JSON file path.
 
-            if self.js_struct in ('list_of_dicts'):
-                return LstofDct(self.json).initialization
-            
-            elif self.js_struct in ('dict_of_dict'):
-                if self.is_branched:
-                    return DctofDct(self.json).initialization
-                
-                return self.json, self.js_struct
-            
-            elif self.js_struct in ('dict_of_list_of_dicts'):
-                
-                return DctofLstofDcts(self.json).initialization
-        else:
-            raise self.unsupported_type(self.js_struct)
-
-
+        :param file: Path to the JSON file.
+        :type file: str
+        """
+        super().__init__()
+        self._path = path
 
     @property
-    def is_branched(self) -> bool:
-        
-        for v in self.json.values():
-            if any(isinstance(j, (list, dict)) for j in v.values()):
-                return True
-        return False
-    
-
-
-
+    def _json(self):
+        return self._connect(self._path)
 
     @property
-    def define_json_struct(self) -> str:
+    def js_define(self):
+        return self.define_json_struct(self._json)
 
-        if isinstance(self.json, dict):
+    def json_normalize(self) -> tuple | None:
+        """
+        Detect the JSON structure type and normalize it using the appropriate
+        transformation class.
 
-            if any(isinstance(v, list) and  all(isinstance(i, dict) for i in v) for v in self.json.values()):
-                return 'dict_of_list_of_dicts'
+        :return: Normalized JSON data and its structure type, or ``None``.
+        :raises unsupported_type: If the JSON structure type is not supported.
+        """
+        js_struct = self.js_define
+
+        if js_struct not in ACCEPTABLE_TYPES:
+
+            raise self.unsupported_type(js_struct)
+
+        match js_struct:
+
+            case 'list_of_dict':
+                return ListofDict(self._json).initialization 
+
+            case 'dict_of_dict':
+                return DictofDict(self._json).initialization
+
+            case 'dict_of_list_of_dict':
+                return DictofListofDict(self._json).initialization
     
-            elif any(isinstance(i, dict) for i in self.json.values()):
+
+
+    def define_json_struct(self, data: dict) -> str:
+        """
+        Determine the JSON structure type and return its conditional name.
+
+        :return: Conditional name of the detected JSON structure.
+        :raises unsupported_type: If the JSON structure type is not supported.
+        """
+
+        if isinstance(data, dict):
+
+            if any(isinstance(v, list) and  all(isinstance(i, dict) for i in v) for v in data.values()):
+                return 'dict_of_list_of_dict'
+    
+            elif any(isinstance(i, dict) for i in data.values()):
                 return 'dict_of_dict'
     
-            elif all(not isinstance(v, (list, dict)) for v in self.json.values()):
+            elif all(not isinstance(v, (list, dict)) for v in data.values()):
                 return 'flaten_dict'
  
 
-        if isinstance(self.json, list):
-            if all(isinstance(item, dict)for item in self.json):
-                return 'list_of_dicts'
+        if isinstance(data, list):
+            if all(isinstance(item, dict) for item in data):
+                return 'list_of_dict'
 
-        raise self.unsupported_type(self.json)
+        raise self.unsupported_type(data)
 
 
-    
 
-    @property
-    def _connect(self) -> dict:
+    def _connect(self, path) -> dict:
+        """
+        Load a non-empty JSON file and return its content.
+
+        :return: Parses JSON data as a dictionary.
+        :raises FileNotFoundError: If the file does not exist.
+        :raises ValueError: If the JSON file is invalid or empty.
+        """
+        file_path = Path(path)
+
+        if not file_path.is_file():
+            self.warn_message.print(f"File not found: {path}")
+            raise FileNotFoundError(f"File not found: {path}")
+
         try:
-
-            with open(f"{self.file}", encoding='utf-8') as file:
-                data = json.load(file)
-            
-            return data
+            content = file_path.read_text(encoding='utf-8').strip()
+            if not content:
+                self.warn_message.print("JSON file is empty")
+                raise ValueError("JSON file is empty")
+            return json.loads(content)
         
         except json.JSONDecodeError as er:
-
-            print(f' \n Json is not valid or empty... \U0000274E \n')
-            print(f'\U00002757 Raised Error -> {er} \U00002757')
-            sys.exit(1)
+            self.warn_message.print(f"\n JSON file is invalid: {er}\U0000274E \n")
+            raise ValueError(f"\n JSON file is invalid: {er}\U0000274E \n") from er

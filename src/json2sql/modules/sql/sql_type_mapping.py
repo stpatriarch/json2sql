@@ -30,5 +30,6 @@ SQL_TYPES = {
 
 PLACEHOLDERS = {
     'sqlite': '?',
-    ('postgresql', 'mysql'): '%s',
+    'postgresql': '%s',
+    'mysql': '%s',
 }

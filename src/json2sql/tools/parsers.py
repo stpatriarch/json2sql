@@ -2,12 +2,28 @@
 
 import argparse
 
+
 def is_json(file: str) -> str:
+    """
+    Chack the input file has a .json extension.
+
+    :param file: File name.
+    :type file: str
+    :return: The file name if valid.
+    :raises ArgumentTypeError: If the file does not have ``.json`` extension.
+    """
+
     if not file.lower().endswith('.json'):
         raise argparse.ArgumentTypeError('Ֆայլը պետք է լինի json | File must be a json')
     return file
 
-def parser():
+def create_parser() -> argparse.ArgumentParser:
+    """
+    Create a CLI argument parser for converting JSON file to an SQL database.
+
+    :return: Configured ArgumentParser object.
+    """
+
     parser = argparse.ArgumentParser(description="ԱՅՍ ԳՈՐԾԻՔԸ ԿՈՉՎԱԾ Է ՕԳՆԵԼ ՎԵՐԱՓՈԽԵԼ JSON֊Ը SQL DB ՖԱՅԼԻ։" \
     "\n THIS TOOL HELPS TO CONVERT JSON FILE TO SQL DB.")
     subparsers = parser.add_subparsers(dest='engine', required=True)
@@ -34,13 +50,10 @@ def parser():
     mysql_parser.add_argument("--host", default="localhost", help="Բազզայի հոսթը | Base host")
     mysql_parser.add_argument("--user", default="root", help="Բազզայի օգտատերը | Base user")
     
+    mysql_parser.add_argument("--password", default="rootroot", help="Բազզայի գաղտնաբառը | base password")
     mysql_parser.add_argument("--port", type=int, default=3306, help="Հոսթի պորտը | Host port")
 
     mysql_parser.add_argument("--name", default="myql", help="Բազզայի անունը | Base name")
     mysql_parser.add_argument('--table', '-t', required=True, help='SQL աղյուսակի անուն | SQL column name')
 
-    
-    
-    
-
-    return parser.parse_args()
+    return parser
