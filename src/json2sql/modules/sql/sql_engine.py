@@ -109,6 +109,7 @@ class SqlEngine(ABC, SqlEngineAcceptType):
             order_by_this = list(self.json[0].keys())
             self.values = [tuple(d[k] for k in order_by_this) for d in self.json]
 
+        # incase flaten_dict
         else:
 
             order_by_this = list(self.json.keys())

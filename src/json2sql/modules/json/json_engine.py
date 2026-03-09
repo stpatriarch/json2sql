@@ -41,13 +41,8 @@ class JsonModCore(NotSupportedMixin):
         transformation class.
 
         :return: Normalized JSON data and its structure type, or ``None``.
-        :raises unsupported_type: If the JSON structure type is not supported.
         """
         js_struct = self.js_define
-
-        if js_struct not in ACCEPTABLE_TYPES:
-
-            raise self.unsupported_type(js_struct)
 
         match js_struct:
 
@@ -62,13 +57,14 @@ class JsonModCore(NotSupportedMixin):
     
 
 
-    def define_json_struct(self, data: dict) -> str:
+    def define_json_struct(self, data: dict | list) -> str:
         """
         Determine the JSON structure type and return its conditional name.
 
         :return: Conditional name of the detected JSON structure.
         :raises unsupported_type: If the JSON structure type is not supported.
         """
+
 
         if isinstance(data, dict):
 
@@ -86,7 +82,7 @@ class JsonModCore(NotSupportedMixin):
             if all(isinstance(item, dict) for item in data):
                 return 'list_of_dict'
 
-        raise self.unsupported_type(data)
+        raise self.unsupported_type(type(data).__name__)
 
 
 
