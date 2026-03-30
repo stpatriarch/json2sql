@@ -55,14 +55,6 @@ class JsonTypeProcessor(ABC):
         return False
 
 
-    # @abstractmethod
-    # def json_standardize(self, *args, **kwargs) -> dict:
-    #     """
-    #     Recursively flatten a nested JSON dictionary by 
-    #     concatenating keys.
-    #     """
-    #     pass
-
     @property
     @abstractmethod
     def initialization(self) -> tuple: 

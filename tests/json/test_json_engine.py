@@ -14,6 +14,27 @@ def json_core(tmp_path):
     return _core_factory
 
 
+def test__json(json_core, monkeypatch):
+
+    core = json_core('{}')
+    
+    monkeypatch.setattr(core, '_connect', lambda _: '{"k_1": {"k_1_1": 21, "k_1_2": 40}}')
+    
+    result = core._json
+    assert result == '{"k_1": {"k_1_1": 21, "k_1_2": 40}}'
+
+
+def test_js_define(json_core, monkeypatch):
+    
+    core = json_core('{}')
+    
+    monkeypatch.setattr(core, 'define_json_struct', lambda _: 'dict_of_list_of_dict')
+
+    result = core.js_define
+
+    assert result == 'dict_of_list_of_dict' 
+
+
 def test_json_normalize_DictofDict(json_core, monkeypatch):
     
     class MockDictofDict:
@@ -74,7 +95,6 @@ def test_json_normalize_DictofListofDict(json_core, monkeypatch):
     assert result == ('dict_of_list_of_dict',)
 
 
-
 def test_define_json_struct(json_core):
 
     json_types = {
@@ -83,14 +103,14 @@ def test_define_json_struct(json_core):
             '{"k_1": {"k_1_1": 21, "k_1_2": 40}}': 'dict_of_dict',
             '[{"k_1": 1, "k_2": "v_1"}]': 'list_of_dict' 
             }
-
-    
+ 
     for js, expacted in json_types.items():
         core = json_core(js)
         data = json.loads(js)
         result = core.define_json_struct(data)
 
         assert expacted == result
+
 
 def test_define_json_struct_unsupported_exception(json_core, monkeypatch):
 

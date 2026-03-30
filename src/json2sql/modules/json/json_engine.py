@@ -28,12 +28,29 @@ class JsonModCore(NotSupportedMixin):
         self._path = path
 
     @property
-    def _json(self):
+    def _json(self) -> dict:
+        """
+        Load and return the JSON content from the file associated with this instance.
+
+        This property calls the internal `_connect` method with the path stored in
+        `self._path` and returns the parsed JSON data.
+
+        :return: The JSON content of the file.
+        """
         return self._connect(self._path)
 
+
     @property
-    def js_define(self):
+    def js_define(self) -> str:
+        """
+        Determine the structure type of the loaded JSON.
+        This property analyzes the JSON data returned by `_json` and uses
+        `define_json_struct` to classify the structure.
+
+        :return: The conditional name representing the JSON structure type.
+        """
         return self.define_json_struct(self._json)
+
 
     def json_normalize(self) -> tuple | None:
         """
@@ -56,7 +73,6 @@ class JsonModCore(NotSupportedMixin):
                 return DictofListofDict(self._json).initialization
     
 
-
     def define_json_struct(self, data: dict | list) -> str:
         """
         Determine the JSON structure type and return its conditional name.
@@ -64,7 +80,6 @@ class JsonModCore(NotSupportedMixin):
         :return: Conditional name of the detected JSON structure.
         :raises unsupported_type: If the JSON structure type is not supported.
         """
-
 
         if isinstance(data, dict):
 
@@ -77,13 +92,11 @@ class JsonModCore(NotSupportedMixin):
             elif all(not isinstance(v, (list, dict)) for v in data.values()):
                 return 'flaten_dict'
  
-
         if isinstance(data, list):
             if all(isinstance(item, dict) for item in data):
                 return 'list_of_dict'
 
         raise self.unsupported_type(type(data).__name__)
-
 
 
     def _connect(self, path) -> dict:
