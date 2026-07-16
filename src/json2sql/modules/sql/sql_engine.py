@@ -141,9 +141,19 @@ class SqliteEngine(SqlEngine):
 
         self.db = dbname.split('.')[0] 
 
-        self.connect = sqlite3.connect(f"{self.db}.db")
+        self.connect = None
 
         self.values: list = []
+
+
+    def open_(self) -> None:
+        """
+        Check the database connection status and open it if necessary.
+        """
+        if self.connect is None:
+
+            self.connect = sqlite3.connect(f"{self.db}.db")
+
 
     def connection(self, content: str, values: list  | None = None) -> sqlite3.Cursor:
         """
@@ -155,6 +165,12 @@ class SqliteEngine(SqlEngine):
         :type values: list | None
         :return: Cursor object resulting from the executed query.
         """      
+        self.open_()
+
+        if self.connect is None:
+        
+            raise RuntimeError('Database connection was not established')
+
         with self.connect:
             self.connect.row_factory = sqlite3.Row
             cursor = self.connect.cursor()
@@ -188,11 +204,31 @@ class PostgresEngine(SqlEngine):
         :type port: int
         """
 
+        self.host = host
+        self.user = user
+        self.password = password
+        self.dbname = dbname
+        self.port = port
+
+
         super().__init__('postgresql', js_file, table)
 
-        self.connect = psycopg.connect(host=host, user=user, password=password,  dbname=dbname, port=port)
-
+        self.connect = None
         self.values: list = []
+
+    def open_(self) -> None:
+        """
+        Check the database connection status and open it if necessary.
+        """
+
+        if self.connect is None or self.connect.closed:
+
+            self.connect = psycopg.connect(
+                    host=self.host, 
+                    user=self.user, 
+                    password=self.password,  
+                    dbname=self.dbname, 
+                    port=self.port)
 
     def connection(self, content: str, values: list | None = None) -> psycopg.Cursor:
         """
@@ -204,6 +240,13 @@ class PostgresEngine(SqlEngine):
         :type values: list | None
         :return: Cursor object resulting from the executed query.
         """      
+
+        self.open_()
+
+        if self.connect is None:
+
+            raise RuntimeError('Database connection was not established')
+        
 
         with self.connect.cursor() as cursor:
  
@@ -238,11 +281,33 @@ class MysqlEngine(SqlEngine):
         :param port:  Database port number.
         :type port: int
         """
-        super().__init__('mysql', js_file, table)
 
-        self.connect = pymysql.connect(host=host, user=user, password=password, database=dbname, port=port)
+        self.js_file = js_file
+        self.host = host
+        self.user = user
+        self.password = password
+        self.dbname = dbname
+        self.table = table
+        self.port = port
 
+        self.connect = None
         self.values: list = []
+
+        super().__init__('mysql', js_file, table)
+    
+    def open_(self) -> None:
+        """
+        Check the database connection status and open it if necessary.
+        """
+
+        if self.connect is None or not self.connect.open:
+
+            self.connect = pymysql.connect(
+                    host=self.host, 
+                    user=self.user, 
+                    password=self.password, 
+                    database=self.dbname, 
+                    port=self.port)
 
     def connection(self, content: str, values: list | None = None) -> pymysql.cursors.Cursor:
         """
@@ -254,6 +319,11 @@ class MysqlEngine(SqlEngine):
         :type values: list | None
         :return: Cursor object resulting from the executed query.
         """      
+
+        self.open_()
+
+        if self.connect is None:
+            raise RuntimeError('Database connection was not established')
 
         with self.connect.cursor() as cursor:
  

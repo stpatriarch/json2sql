@@ -25,7 +25,7 @@ class SqlEngineAcceptType(NotSupportedMixin):
         :param engine: Supported engine name.
         :type engine: str
         """
-        
+        NotSupportedMixin.__init__(self)      
         self.engine: str = engine if engine in self.acceptable_engines else self.unsupported_engine(engine=engine)
 
 

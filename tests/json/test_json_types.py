@@ -1,6 +1,4 @@
 import pytest
-import json
-from pathlib import Path
 from json2sql.modules.json.json_types import DictofDict, ListofDict, DictofListofDict
 
 @pytest.fixture
