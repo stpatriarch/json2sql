@@ -3,7 +3,8 @@
 from .sql_engine import SqliteEngine, PostgresEngine, MysqlEngine
 from argparse import Namespace
 
-class EngineFacotory:
+
+class EngineFactory:
     """
     Factory class for creating SQL engine instances based on CLI arguments.
     """

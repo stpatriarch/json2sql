@@ -300,3 +300,4 @@ def test_mysql_connection_opening(mysql_engine_mock):
     engine.open_()
 
     assert engine.connect is mock_connection
+
