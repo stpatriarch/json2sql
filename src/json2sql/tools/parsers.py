@@ -53,7 +53,7 @@ def create_parser() -> argparse.ArgumentParser:
     mysql_parser.add_argument("--password", default="rootroot", help="Բազզայի գաղտնաբառը | base password")
     mysql_parser.add_argument("--port", type=int, default=3306, help="Հոսթի պորտը | Host port")
 
-    mysql_parser.add_argument("--name", default="myql", help="Բազզայի անունը | Base name")
+    mysql_parser.add_argument("--name", default="mysql", help="Բազզայի անունը | Base name")
     mysql_parser.add_argument('--table', '-t', required=True, help='SQL աղյուսակի անուն | SQL column name')
 
     return parser
