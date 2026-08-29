@@ -1,12 +1,15 @@
 # json2sql
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+This project is licensed under the GNU General Public License v3.0 or later.
+See the [LICENSE](LICENSE) file for details.
 
 <br>
 
 ### :toolbox: json ֆայլերի փոխակերպիչ sql *.db ֆայլի մեկ հրամանով։
 
-Այս պարզագույն գործիքը կոչված է օգնել կատարելու վերափոխում ( **convert** ) **json** ֆայլը **sql** ֆայլի(միայն sqlite շարժիչի պարագայում: Մնացած դեպքերում postgres, mysql այն լռելայն տվյալները կգրանցի տվյլաների բազզայի տրված անվամբ աղյուակում)։ Այն ընդունում է **\*.json** և վերափոխում այն **\*.sql-ի։**
+Այս պարզագույն գործիքը կոչված է օգնել կատարելու վերափոխում ( **convert** ) **json** ֆայլը **db** ֆայլի(միայն sqlite շարժիչի պարագայում: Մնացած դեպքերում postgres, mysql այն լռելայն տվյալները կգրանցի տվյլաների բազզայի տրված անվամբ աղյուակում)։ Այն ընդունում է **\*.json** և վերափոխում այն **\*.db-ի։**
 
 **Տեղադրման և շահագործման գործընթացը** [ասյտեղ](docs/INSTALL_AM.md)
 
@@ -54,9 +57,9 @@ SQL | STATUS | DATE | MARK |
 
 ### :toolbox: Конвертер JSON-файлов в SQL \*.db одним действием.
 
-Этот простой инструмент предназначен для того, чтобы выполнить преобразование (**convert**) **JSON**-файла в **SQL**-файл (только в случае с движком SQLite. В других случаях Postgres и MySQL будут записывать данные по умолчанию в таблицу базы данных с заданным именем). Он принимает **\*.json** и преобразует его в **\*.sql**.
+Этот простой инструмент предназначен для того, чтобы выполнить преобразование (**convert**) **JSON**-файла в **DB**-файл (только в случае с движком SQLite. В других случаях Postgres и MySQL будут записывать данные по умолчанию в таблицу базы данных с заданным именем). Он принимает **\*.json** и преобразует его в **\*.db**.
 
-**Процесс установки и использования** [здесь](docs/INSTALL_RU.md).
+**Процесс установки и использования** [здесь](docs/INSTALL_RU.md)
 
 #### :pushpin: Цель
 
@@ -102,7 +105,7 @@ SQL | STATUS | DATE | MARK |
 
 ### :toolbox: Convert JSON files into SQL \*.db with a single command.
 
-This simple tool is designed to perform a transformation (**convert**) from a **JSON** file into an **SQL**  file (only in the case of sqlite engine. In other cases postgres, mysql it will record the default data in the database table with the given name). It takes **\*.json** and converts it into **\*.sql**.
+This simple tool is designed to perform a transformation (**convert**) from a **JSON** file into an **DB**  file (only in the case of sqlite engine. In other cases postgres, mysql it will record the default data in the database table with the given name). It takes **\*.json** and converts it into **\*.db**.
 
 **Installation and usage guide** [here](docs/INSTALL_EN.md).
 

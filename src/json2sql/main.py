@@ -4,41 +4,29 @@
 # Инструмент предназначен для преобразования JSON в файл SQLite3 или для записи данных в БД указанных серверов PostgreSQL и MySQL.
 # The tool is designed to convert JSON into an SQLite3 file or to insert the data into a database on specified PostgreSQL or MySQL servers.
 
+from json2sql.modules.json import JsonModCore
+from json2sql.modules.sql import EngineFacotory
+from json2sql.tools import create_parser
+from rich.console import Console
 
-from json2sql.modules import JsonModify, SqliteEngine, PostgresEngine, MysqlEngine
-from json2sql.tools import parser
 
-
-
+info_message = Console(style='green bold')
 
 def main():
-    args = parser()
+    parser = create_parser()
+    args = parser.parse_args()
 
-    # init input json file input file -> ifile
-    inputfile = JsonModify(file=args.input).json_normalize()
+    inputfile = JsonModCore(path=args.input).json_normalize()
+    outfile = None
 
+    if inputfile:
 
-    if args.engine in ('sqlite',):
-        outfile = SqliteEngine(js_file=inputfile, 
-                                   dbname=args.input, table=args.table)
+        outfile = EngineFacotory(input_file=inputfile, args=args).create()
+    
+    if outfile:
 
-    elif args.engine in ('postgres',):
-        outfile = PostgresEngine(js_file=inputfile, 
-                                   host=args.host, user=args.user, 
-                                   password=args.password, dbname=args.name, 
-                                   table=args.table, port=args.port)
-        
-    elif args.engine in ('mysql',):
-        outfile = MysqlEngine(js_file=inputfile, 
-                                   host=args.host, user=args.user, 
-                                   password=args.password, dbname=args.name, 
-                                   table=args.table, port=args.port)
-        
-    outfile.insert()
-    print(' Converted Succesfully \U00002705')
-
-
-
+        outfile.insert()
+        info_message.print(' Converted Succesfully \U00002705')
 
 if __name__ == '__main__':
     main()

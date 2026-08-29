@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 
-from .json_types import DctofDct, DctofLstofDcts, LstofDct
+from .json_engine import JsonModCore
 
-ACCEPTABLE_TYPES = ('list_of_dicts', 
-                    'dict_of_dict', 
-                    'dict_of_list_of_dicts')
 
-__all__ = ['DctofDct', 'DctofLstofDcts', 'LstofDct', 'ACCAPTABLE_TYPES']
+__all__ : list[str] = ['JsonModCore',]

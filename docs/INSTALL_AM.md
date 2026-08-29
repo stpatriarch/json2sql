@@ -4,6 +4,8 @@
 ### Տեղադրում
 
 ```bash
+## PIP
+
 # Ռեպոզիտորիայի կլոնավորում։ 
 git clone https://github.com/stpatriarch/json2sql.git && cd json2sql
 
@@ -12,6 +14,14 @@ python3 -m venv venv && source venv/bin/activate
 
 # տեղադրում։
 pip install .
+
+## UV
+
+# Ռեպոզիտորիայի կլոնավորում։ 
+git clone https://github.com/stpatriarch/json2sql.git && cd json2sql
+
+# տեղադրում։
+uv sync
 ```
 
 ### Շահագործում

@@ -6,6 +6,8 @@
 ### Installing
 
 ```sh
+## PIP
+
 # Repository cloning.
 git clone https://github.com/stpatriarch/json2sql.git && cd json2sql
 
@@ -14,6 +16,14 @@ python3 -m venv venv && source venv/bin/activate
 
 # installing.
 pip install .
+
+## UV
+
+# Repository cloning.
+git clone https://github.com/stpatriarch/json2sql.git && cd json2sql
+
+# installing.
+uv sync
 ```
 
 ### Usage

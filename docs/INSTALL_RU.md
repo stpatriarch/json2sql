@@ -5,6 +5,8 @@
 ### Установка
 
 ```sh
+## PIP 
+
 # Клонирование репозитории.
 git clone https://github.com/stpatriarch/json2sql.git && cd json2sql
 
@@ -13,6 +15,14 @@ python3 -m venv venv && source venv/bin/activate
 
 # Установка.
 pip install .
+
+## UV
+
+# Клонирование репозитории.
+git clone https://github.com/stpatriarch/json2sql.git && cd json2sql
+
+# Установка.
+uv sync
 ```
 
 ### Использование
