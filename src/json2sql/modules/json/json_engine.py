@@ -99,7 +99,7 @@ class JsonModCore(NotSupportedMixin):
         raise self.unsupported_type(type(data).__name__)
 
 
-    def _connect(self, path) -> dict:
+    def _connect(self, path: str) -> dict:
         """
         Load a non-empty JSON file and return its content.
 

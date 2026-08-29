@@ -28,7 +28,7 @@ class NotSupportedMixin:
         self.warn_message = Console(style='red bold')
 
 
-    def unsupported_type(self, data_type) -> NoReturn:
+    def unsupported_type(self, data_type: object) -> NoReturn:
         """
         Raise an error for unsupported JSON or file structure types.
 
@@ -45,7 +45,7 @@ class NotSupportedMixin:
         raise FileError(f'Unsupported file type -> {data_type}')
     
     
-    def unsupported_engine(self, engine) -> NoReturn:
+    def unsupported_engine(self, engine: str) -> NoReturn:
         """
         Raise an error for unsupported database engines.
 
